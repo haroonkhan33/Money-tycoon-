@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Theme.NeonTycoon" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Brand colors -->
+        <item name="colorPrimary">@color/neon_green</item>
+        <item name="colorOnPrimary">@color/text_on_neon</item>
+        <item name="colorPrimaryContainer">@color/bg_card_highlight</item>
+        <item name="colorOnPrimaryContainer">@color/neon_green</item>
+        
+        <item name="colorSecondary">@color/neon_cyan</item>
+        <item name="colorOnSecondary">#000000</item>
+        
+        <item name="colorSurface">@color/bg_surface</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        
+        <item name="android:windowBackground">@color/bg_dark</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/nav_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Theme.MyApplication" parent="Theme.NeonTycoon" />
+
+    <style name="Theme.NeonBottomSheetDialog" parent="Theme.Material3.Dark.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/NeonBottomSheetStyle</item>
+    </style>
+
+    <style name="NeonBottomSheetStyle" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="backgroundTint">@android:color/transparent</item>
+    </style>
+</resources>

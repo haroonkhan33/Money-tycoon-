@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_cash"
+        android:icon="@drawable/ic_neon_dollar"
+        android:title="Cash" />
+
+    <item
+        android:id="@+id/nav_businesses"
+        android:icon="@drawable/ic_business_bank"
+        android:title="Business" />
+
+    <item
+        android:id="@+id/nav_trading"
+        android:icon="@drawable/ic_nav_trading"
+        android:title="Trading" />
+
+    <item
+        android:id="@+id/nav_jobs"
+        android:icon="@drawable/ic_nav_jobs"
+        android:title="Career" />
+</menu>

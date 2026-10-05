@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Backgrounds -->
+    <color name="bg_dark">#080C14</color>
+    <color name="bg_surface">#0F172A</color>
+    <color name="bg_surface_elevated">#17233B</color>
+    <color name="bg_card">#111A2E</color>
+    <color name="bg_card_highlight">#16233D</color>
+    <color name="nav_bg">#090D18</color>
+    
+    <!-- Neon Green Accents -->
+    <color name="neon_green">#00FF66</color>
+    <color name="neon_green_light">#5CFF95</color>
+    <color name="neon_green_dark">#00B843</color>
+    <color name="neon_green_glow">#3300FF66</color>
+    <color name="neon_green_subtle">#1A00FF66</color>
+    <color name="neon_green_border">#5500FF66</color>
+
+    <!-- Cyber Secondary Accents -->
+    <color name="neon_cyan">#00E5FF</color>
+    <color name="neon_cyan_glow">#3300E5FF</color>
+    <color name="neon_amber">#FFD600</color>
+    <color name="neon_red">#FF3366</color>
+    
+    <!-- Card Borders & Separators -->
+    <color name="card_stroke_default">#1E2C44</color>
+    <color name="card_stroke_active">#3300FF66</color>
+    <color name="divider_color">#1A2538</color>
+
+    <!-- Typography -->
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_secondary">#94A3B8</color>
+    <color name="text_muted">#64748B</color>
+    <color name="text_on_neon">#001F0B</color>
+    
+    <!-- Navigation Selector Tint -->
+    <color name="nav_item_selected">#00FF66</color>
+    <color name="nav_item_unselected">#64748B</color>
+</resources>

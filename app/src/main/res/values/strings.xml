@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Neon Tycoon</string>
+    <string name="tycoon_title">MONEY TYCOON</string>
+    <string name="tycoon_subtitle">FINANCIAL LIFE SIMULATOR</string>
+    <string name="player_level_badge">YEAR 2026 • AGE 21</string>
+    <string name="total_net_worth_label">TOTAL CASH / NET WORTH</string>
+    <string name="net_worth_val">$10.00</string>
+    <string name="net_worth_growth">+0% this session</string>
+    <string name="monthly_cash_flow_label">PASSIVE CASH FLOW</string>
+    <string name="cash_flow_val">+$0.00 / sec</string>
+    <string name="cash_flow_rate">+$0.00 / min</string>
+    <string name="btn_collect_revenue">COLLECT VAULT</string>
+    <string name="portfolio_title">Business Enterprises</string>
+    <string name="portfolio_subtitle">Tap businesses to produce or buy upgrades</string>
+    
+    <!-- Manual Clicker -->
+    <string name="tap_to_mint">TAP TO EARN CASH</string>
+    <string name="tap_power_label">+$1.00 / TAP</string>
+    <string name="tap_level_label">CLICK POWER: LVL 1</string>
+    <string name="btn_upgrade_tap">UPGRADE CLICK: LVL 2 (+$2.00/tap) • $20.00</string>
+    <string name="manual_taps_count">Taps: 0</string>
+
+    <!-- Business 1: Crypto Mine -->
+    <string name="biz_1_name">Coffee Kiosk</string>
+    <string name="biz_1_lvl">LVL 0</string>
+    <string name="biz_1_income">+$0.00/sec</string>
+    <string name="biz_1_cost">$50.00</string>
+    
+    <!-- Business 2: AI Robotics -->
+    <string name="biz_2_name">Tech Agency</string>
+    <string name="biz_2_lvl">LVL 0</string>
+    <string name="biz_2_income">+$0.00/sec</string>
+    <string name="biz_2_cost">$200.00</string>
+
+    <!-- Business 3: Quantum Cloud -->
+    <string name="biz_3_name">Real Estate Firm</string>
+    <string name="biz_3_lvl">LVL 0</string>
+    <string name="biz_3_income">+$0.00/sec</string>
+    <string name="biz_3_cost">$800.00</string>
+
+    <!-- Business 4: BioTech Core -->
+    <string name="biz_4_name">Crypto Mining Rig</string>
+    <string name="biz_4_lvl">LVL 0</string>
+    <string name="biz_4_income">+$0.00/sec</string>
+    <string name="biz_4_cost">$3,200.00</string>
+
+    <!-- Business 5: Orbital Cargo -->
+    <string name="biz_5_name">BioTech Genetics</string>
+    <string name="biz_5_lvl">LVL 0</string>
+    <string name="biz_5_income">+$0.00/sec</string>
+    <string name="biz_5_cost">$12,500.00</string>
+
+    <!-- Business 6: Neo Bank -->
+    <string name="biz_6_name">Aerospace Corp</string>
+    <string name="biz_6_lvl">LVL 0</string>
+    <string name="biz_6_income">+$0.00/sec</string>
+    <string name="biz_6_cost">$50,000.00</string>
+
+    <!-- Career / Jobs System -->
+    <string name="career_title">Career Advancement</string>
+    <string name="career_subtitle">Climb from entry level to C-Suite Executive</string>
+    <string name="job_dishwasher">Dishwasher / Intern</string>
+    <string name="btn_work_shift">DO WORK SHIFT</string>
+    <string name="education_title">Education &amp; Qualifications</string>
+    <string name="btn_study_degree">GET COLLEGE DEGREE • $250.00</string>
+
+    <!-- Trading System -->
+    <string name="trading_title">Stock &amp; Crypto Exchange</string>
+    <string name="trading_subtitle">Live simulated financial markets with real-time volatility</string>
+    <string name="portfolio_holdings">TOTAL PORTFOLIO: $0.00</string>
+
+    <!-- Navigation -->
+    <string name="nav_jobs">Jobs</string>
+    <string name="nav_investments">Investments</string>
+    <string name="nav_trading">Trading</string>
+    <string name="upgrade_lbl">UPGRADE</string>
+    <string name="multiplier_tag">MANUAL CLICK ENGINE</string>
+</resources>

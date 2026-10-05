@@ -1,0 +1,6 @@
+{
+  "name": "Neon Tycoon",
+  "description": "Idle tycoon game dashboard featuring a sleek dark mode theme with neon green accents, total net worth and cash flow stats, business investments, and trading tabs.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
