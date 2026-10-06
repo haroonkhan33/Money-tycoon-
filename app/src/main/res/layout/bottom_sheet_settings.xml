@@ -45,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SETTINGS &amp; SYSTEM"
+                    android:text="SETTINGS &amp; REDEEM"
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold"
@@ -54,7 +54,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Preferences, reset progress &amp; admin tools"
+                    android:text="Audio, promo codes, and secret developer menu"
                     android:textColor="@color/text_secondary"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -76,12 +76,244 @@
             android:layout_marginVertical="14dp"
             android:background="@color/divider_color" />
 
-        <!-- ADMIN ACCESS / SECRET CODE CARD -->
+        <!-- AUDIO & HAPTIC PREFERENCES CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/bg_surface"
+            app:cardCornerRadius="16dp"
+            app:strokeColor="@color/card_stroke_default"
+            app:strokeWidth="1.2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOUND &amp; HAPTIC EFFECTS"
+                    android:textColor="@color/neon_green"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.06"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Sound FX Switch -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Sound Effects (SFX)"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchSoundEffects"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+
+                <!-- Vibration / Haptic Switch -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tactile Haptic Feedback"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp" />
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/switchHaptics"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- PUBLIC PROMO CODE REDEEM CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/bg_surface"
+            app:cardCornerRadius="16dp"
+            app:strokeColor="@color/neon_cyan"
+            app:strokeWidth="1.2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="🎁 PROMO CODE REDEEM"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_cyan_pill"
+                        android:text="TRY: sub10"
+                        android:textColor="@color/neon_cyan"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Redeem official promo codes for instant bonus cash rewards."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/etPromoCode"
+                        android:layout_width="0dp"
+                        android:layout_height="46dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg_tap_button"
+                        android:hint="e.g. sub10"
+                        android:textColorHint="@color/text_muted"
+                        android:textColor="@color/text_primary"
+                        android:textSize="13sp"
+                        android:paddingHorizontal="14dp"
+                        android:singleLine="true"
+                        android:inputType="text" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnRedeemPromo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="46dp"
+                        android:backgroundTint="@color/neon_cyan"
+                        android:text="REDEEM"
+                        android:textColor="#000000"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 2-PLAYER MULTIPLAYER DUEL CARD -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMultiplayerDuel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="@color/bg_surface"
+            app:cardCornerRadius="16dp"
+            app:strokeColor="@color/neon_green"
+            app:strokeWidth="1.2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_multiplayer"
+                        app:tint="@color/neon_green"
+                        android:contentDescription="Multiplayer" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:text="2-PLAYER TYCOON DUEL"
+                        android:textColor="@color/neon_green"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="0.05" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_neon_pill"
+                        android:text="LIVE"
+                        android:textColor="@color/neon_green"
+                        android:textSize="10sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Compete in real-time net worth races! Play locally on one device or challenge an online rival in a 30-second duel."
+                    android:textColor="@color/text_secondary"
+                    android:textSize="11sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnOpenMultiplayerFromSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="12dp"
+                    android:backgroundTint="@color/neon_green"
+                    android:text="⚔️ PLAY 2-PLAYER DUEL NOW"
+                    android:textColor="@color/text_on_neon"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="10dp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- DEVELOPER ACCESS / SECRET CODE (9ppp) -->
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardAdminSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="14dp"
             app:cardBackgroundColor="@color/bg_surface"
             app:cardCornerRadius="16dp"
             app:strokeColor="@color/neon_amber"
@@ -103,9 +335,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="⚡ SECRET ADMIN MODE"
+                        android:text="⚡ DEVELOPER ACCESS"
                         android:textColor="@color/neon_amber"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:textStyle="bold"
                         android:letterSpacing="0.05" />
 
@@ -125,16 +357,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Enter the secret developer code to unlock the admin panel."
+                    android:text="Enter developer access code to unlock admin controls."
                     android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
                 <!-- Secret Code Input Box (Visible when locked) -->
                 <LinearLayout
                     android:id="@+id/layoutSecretCodeInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -142,13 +374,13 @@
                         android:id="@+id/etSecretCode"
                         android:layout_width="0dp"
                         android:layout_height="46dp"
-                        android:layout_marginEnd="10dp"
+                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_tap_button"
-                        android:hint="Enter password..."
+                        android:hint="Enter secret access code..."
                         android:textColorHint="@color/text_muted"
                         android:textColor="@color/text_primary"
-                        android:textSize="14sp"
+                        android:textSize="13sp"
                         android:paddingHorizontal="14dp"
                         android:singleLine="true"
                         android:inputType="text" />
@@ -184,6 +416,41 @@
                         android:letterSpacing="0.08"
                         android:layout_marginBottom="8dp" />
 
+                    <!-- Edit Balance Field -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="10dp">
+
+                        <EditText
+                            android:id="@+id/etEditBalance"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_tap_button"
+                            android:hint="Edit cash balance ($)..."
+                            android:textColorHint="@color/text_muted"
+                            android:textColor="@color/neon_green"
+                            android:textSize="13sp"
+                            android:paddingHorizontal="12dp"
+                            android:inputType="numberDecimal" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnApplyBalance"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="44dp"
+                            android:backgroundTint="@color/bg_surface_elevated"
+                            android:text="APPLY"
+                            android:textColor="@color/neon_green"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="10dp" />
+                    </LinearLayout>
+
                     <!-- Cheats Row 1: Cash -->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -203,9 +470,7 @@
                             android:textColor="@color/neon_green"
                             android:textSize="11sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_green_border"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAdminAdd1B"
@@ -219,9 +484,7 @@
                             android:textColor="@color/neon_green"
                             android:textSize="11sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_green_border"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
                     </LinearLayout>
 
                     <!-- Cheats Row 2: Businesses & Tap -->
@@ -243,9 +506,7 @@
                             android:textColor="@color/neon_cyan"
                             android:textSize="10sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_cyan"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAdminMaxTap"
@@ -259,9 +520,7 @@
                             android:textColor="@color/neon_cyan"
                             android:textSize="10sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_cyan"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
                     </LinearLayout>
 
                     <!-- Cheats Row 3: Career & Stocks -->
@@ -279,13 +538,11 @@
                             android:layout_marginEnd="6dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/bg_surface_elevated"
-                            android:text="INSTANT CEO (MAX)"
+                            android:text="MAX CAREER"
                             android:textColor="@color/neon_amber"
                             android:textSize="10sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_amber"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btnAdminGiveStocks"
@@ -295,29 +552,48 @@
                             android:layout_marginStart="6dp"
                             android:layout_weight="1"
                             android:backgroundTint="@color/bg_surface_elevated"
-                            android:text="+5,000 ALL STOCKS"
+                            android:text="+5K STOCKS"
                             android:textColor="@color/neon_amber"
                             android:textSize="10sp"
                             android:textStyle="bold"
-                            app:cornerRadius="10dp"
-                            app:strokeColor="@color/neon_amber"
-                            app:strokeWidth="1dp" />
+                            app:cornerRadius="10dp" />
                     </LinearLayout>
 
-                    <!-- Cheats Row 4: Missions -->
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnAdminCompleteMissions"
-                        style="@style/Widget.Material3.Button.TonalButton"
+                    <!-- Cheats Row 4: Missions & Event Log -->
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="44dp"
-                        android:backgroundTint="@color/bg_surface_elevated"
-                        android:text="🎯 COMPLETE ALL MISSIONS INSTANTLY"
-                        android:textColor="@color/neon_green"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        app:cornerRadius="10dp"
-                        app:strokeColor="@color/neon_green"
-                        app:strokeWidth="1dp" />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="8dp">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAdminCompleteMissions"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_marginEnd="6dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/bg_surface_elevated"
+                            android:text="COMPLETE MISSIONS"
+                            android:textColor="@color/neon_green"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="10dp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAdminEventLog"
+                            style="@style/Widget.Material3.Button.TonalButton"
+                            android:layout_width="0dp"
+                            android:layout_height="44dp"
+                            android:layout_marginStart="6dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="@color/bg_surface_elevated"
+                            android:text="📜 EVENT LOG"
+                            android:textColor="@color/neon_amber"
+                            android:textSize="10sp"
+                            android:textStyle="bold"
+                            app:cornerRadius="10dp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -343,7 +619,7 @@
                     android:layout_height="wrap_content"
                     android:text="⚠️ RESET PROGRESS"
                     android:textColor="@color/neon_red"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:letterSpacing="0.05" />
 
@@ -351,21 +627,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="Wipe all net worth, career shifts, businesses, and stocks back to a clean new game start."
+                    android:text="Wipe net worth, businesses, managers, and trades back to starting state ($25.00)."
                     android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnResetGameProgress"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_marginTop="14dp"
+                    android:layout_height="46dp"
+                    android:layout_marginTop="12dp"
                     android:backgroundTint="@color/neon_red"
                     android:text="RESET ALL PROGRESS"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.04"
                     app:cornerRadius="10dp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -374,8 +649,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="8dp"
-            android:text="Money Tycoon • Financial Sim Engine v2.0"
+            android:layout_marginTop="4dp"
+            android:text="Money Tycoon: Tap &amp; Trade • Engine v3.0"
             android:textColor="@color/text_muted"
             android:textSize="11sp" />
     </LinearLayout>

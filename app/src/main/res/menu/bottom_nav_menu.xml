@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/nav_cash"
-        android:icon="@drawable/ic_neon_dollar"
+        android:icon="@drawable/ic_wallet"
         android:title="Cash" />
 
     <item
@@ -17,6 +17,6 @@
 
     <item
         android:id="@+id/nav_jobs"
-        android:icon="@drawable/ic_nav_jobs"
+        android:icon="@drawable/ic_school"
         android:title="Career" />
 </menu>

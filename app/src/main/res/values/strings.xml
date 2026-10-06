@@ -1,78 +1,80 @@
 <resources>
-    <string name="app_name">Neon Tycoon</string>
+    <string name="app_name">Money Tycoon: Tap &amp; Trade</string>
     <string name="tycoon_title">MONEY TYCOON</string>
-    <string name="tycoon_subtitle">FINANCIAL LIFE SIMULATOR</string>
+    <string name="tycoon_subtitle">TAP &amp; TRADE SIMULATOR</string>
     <string name="player_level_badge">YEAR 2026 • AGE 21</string>
-    <string name="total_net_worth_label">TOTAL CASH / NET WORTH</string>
-    <string name="net_worth_val">$10.00</string>
+    <string name="total_net_worth_label">TOTAL NET WORTH</string>
+    <string name="net_worth_val">$25.00</string>
     <string name="net_worth_growth">+0% this session</string>
     <string name="monthly_cash_flow_label">PASSIVE CASH FLOW</string>
     <string name="cash_flow_val">+$0.00 / sec</string>
     <string name="cash_flow_rate">+$0.00 / min</string>
     <string name="btn_collect_revenue">COLLECT VAULT</string>
-    <string name="portfolio_title">Business Enterprises</string>
-    <string name="portfolio_subtitle">Tap businesses to produce or buy upgrades</string>
+    <string name="portfolio_title">Business Empire</string>
+    <string name="portfolio_subtitle">Upgrade businesses and hire automated managers</string>
     
     <!-- Manual Clicker -->
-    <string name="tap_to_mint">TAP TO EARN CASH</string>
+    <string name="tap_to_mint">TAP TO MINT CASH</string>
     <string name="tap_power_label">+$1.00 / TAP</string>
     <string name="tap_level_label">CLICK POWER: LVL 1</string>
     <string name="btn_upgrade_tap">UPGRADE CLICK: LVL 2 (+$2.00/tap) • $20.00</string>
     <string name="manual_taps_count">Taps: 0</string>
 
-    <!-- Business 1: Crypto Mine -->
+    <!-- Business 1: Coffee Kiosk -->
     <string name="biz_1_name">Coffee Kiosk</string>
     <string name="biz_1_lvl">LVL 0</string>
     <string name="biz_1_income">+$0.00/sec</string>
     <string name="biz_1_cost">$50.00</string>
     
-    <!-- Business 2: AI Robotics -->
+    <!-- Business 2: Tech Agency -->
     <string name="biz_2_name">Tech Agency</string>
     <string name="biz_2_lvl">LVL 0</string>
     <string name="biz_2_income">+$0.00/sec</string>
     <string name="biz_2_cost">$200.00</string>
 
-    <!-- Business 3: Quantum Cloud -->
+    <!-- Business 3: Real Estate Firm -->
     <string name="biz_3_name">Real Estate Firm</string>
     <string name="biz_3_lvl">LVL 0</string>
     <string name="biz_3_income">+$0.00/sec</string>
     <string name="biz_3_cost">$800.00</string>
 
-    <!-- Business 4: BioTech Core -->
+    <!-- Business 4: Crypto Mining Rig -->
     <string name="biz_4_name">Crypto Mining Rig</string>
     <string name="biz_4_lvl">LVL 0</string>
     <string name="biz_4_income">+$0.00/sec</string>
     <string name="biz_4_cost">$3,200.00</string>
 
-    <!-- Business 5: Orbital Cargo -->
+    <!-- Business 5: BioTech Genetics -->
     <string name="biz_5_name">BioTech Genetics</string>
     <string name="biz_5_lvl">LVL 0</string>
     <string name="biz_5_income">+$0.00/sec</string>
     <string name="biz_5_cost">$12,500.00</string>
 
-    <!-- Business 6: Neo Bank -->
+    <!-- Business 6: Aerospace Corp -->
     <string name="biz_6_name">Aerospace Corp</string>
     <string name="biz_6_lvl">LVL 0</string>
     <string name="biz_6_income">+$0.00/sec</string>
     <string name="biz_6_cost">$50,000.00</string>
 
-    <!-- Career / Jobs System -->
-    <string name="career_title">Career Advancement</string>
-    <string name="career_subtitle">Climb from entry level to C-Suite Executive</string>
-    <string name="job_dishwasher">Dishwasher / Intern</string>
-    <string name="btn_work_shift">DO WORK SHIFT</string>
-    <string name="education_title">Education &amp; Qualifications</string>
-    <string name="btn_study_degree">GET COLLEGE DEGREE • $250.00</string>
-
     <!-- Trading System -->
-    <string name="trading_title">Stock &amp; Crypto Exchange</string>
-    <string name="trading_subtitle">Live simulated financial markets with real-time volatility</string>
+    <string name="trading_title">Real-World Trading</string>
+    <string name="trading_subtitle">Candlestick charts with leverage (1X, 2X, 5X, 10X)</string>
     <string name="portfolio_holdings">TOTAL PORTFOLIO: $0.00</string>
 
     <!-- Navigation -->
-    <string name="nav_jobs">Jobs</string>
-    <string name="nav_investments">Investments</string>
+    <string name="nav_business">Business</string>
     <string name="nav_trading">Trading</string>
+    <string name="nav_luxury">Luxury</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Career & Education -->
+    <string name="career_title">Corporate Ladder</string>
+    <string name="career_subtitle">Climb from Intern to Chief Executive Officer</string>
+    <string name="btn_work_shift">DO WORK SHIFT</string>
+    <string name="education_title">Executive Education</string>
+    <string name="btn_study_degree">ENROLL IN DEGREE</string>
+    
+    <!-- Common -->
     <string name="upgrade_lbl">UPGRADE</string>
     <string name="multiplier_tag">MANUAL CLICK ENGINE</string>
 </resources>

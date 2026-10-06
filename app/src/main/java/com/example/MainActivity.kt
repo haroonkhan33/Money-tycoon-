@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
@@ -32,8 +34,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.materialswitch.MaterialSwitch
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -203,6 +207,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvPlayerLevel: TextView
     private lateinit var btnTopMissions: View
     private lateinit var btnTopSettings: View
+    private lateinit var btnTopMultiplayer: View
     private lateinit var tvMissionsBadge: TextView
     private lateinit var tvTotalNetWorth: TextView
     private lateinit var tvNetWorthGrowth: TextView
@@ -215,6 +220,9 @@ class MainActivity : AppCompatActivity() {
     private var missionsBottomSheetDialog: BottomSheetDialog? = null
     private var settingsBottomSheetDialog: BottomSheetDialog? = null
     private var isAdminUnlocked = false
+    private var duelTimerJob: Job? = null
+    private var rivalTapJob: Job? = null
+    private lateinit var soundManager: SoundManager
 
     // Manual Clicker UI
     private lateinit var containerTapArea: FrameLayout
@@ -324,6 +332,7 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
+        soundManager = SoundManager(this)
         bindViews()
         setupWindowInsets()
         initDailyMissions()
@@ -349,6 +358,7 @@ class MainActivity : AppCompatActivity() {
         tvPlayerLevel = findViewById(R.id.tvPlayerLevel)
         btnTopMissions = findViewById(R.id.btnTopMissions)
         btnTopSettings = findViewById(R.id.btnTopSettings)
+        btnTopMultiplayer = findViewById(R.id.btnTopMultiplayer)
         tvMissionsBadge = findViewById(R.id.tvMissionsBadge)
         tvTotalNetWorth = findViewById(R.id.tvTotalNetWorth)
         tvNetWorthGrowth = findViewById(R.id.tvNetWorthGrowth)
@@ -536,6 +546,18 @@ class MainActivity : AppCompatActivity() {
             showSettingsBottomSheet()
         }
 
+        btnTopMultiplayer.setOnClickListener {
+            showMultiplayerDuelDialog()
+        }
+
+        findViewById<View>(R.id.cardCashMultiplayerPromo)?.setOnClickListener {
+            showMultiplayerDuelDialog()
+        }
+
+        findViewById<View>(R.id.btnQuickMultiplayer)?.setOnClickListener {
+            showMultiplayerDuelDialog()
+        }
+
         // Trading Terminal Asset Selection Chips
         chipStockNeon.setOnClickListener { selectAssetForTerminal(0) }
         chipStockCyber.setOnClickListener { selectAssetForTerminal(1) }
@@ -678,12 +700,64 @@ class MainActivity : AppCompatActivity() {
 
     private fun showSettingsBottomSheet() {
         triggerHapticFeedback()
+        soundManager.playTick()
         val dialog = BottomSheetDialog(this, R.style.Theme_NeonBottomSheetDialog)
         val sheetView = layoutInflater.inflate(R.layout.bottom_sheet_settings, null)
         dialog.setContentView(sheetView)
         settingsBottomSheetDialog = dialog
 
         val btnClose = sheetView.findViewById<ImageView>(R.id.sheetSettingsBtnClose)
+        val switchSound = sheetView.findViewById<MaterialSwitch>(R.id.switchSoundEffects)
+        val switchHaptics = sheetView.findViewById<MaterialSwitch>(R.id.switchHaptics)
+
+        switchSound?.isChecked = soundManager.isSoundEnabled
+        switchSound?.setOnCheckedChangeListener { _, isChecked ->
+            soundManager.isSoundEnabled = isChecked
+            if (isChecked) soundManager.playPop()
+        }
+
+        switchHaptics?.isChecked = soundManager.isHapticEnabled
+        switchHaptics?.setOnCheckedChangeListener { _, isChecked ->
+            soundManager.isHapticEnabled = isChecked
+            if (isChecked) triggerHapticFeedback()
+        }
+
+        // Public Promo Code Redemption System
+        val etPromoCode = sheetView.findViewById<EditText>(R.id.etPromoCode)
+        val btnRedeemPromo = sheetView.findViewById<MaterialButton>(R.id.btnRedeemPromo)
+        btnRedeemPromo?.setOnClickListener {
+            val code = etPromoCode?.text?.toString()?.trim()?.lowercase(Locale.ROOT)
+            when (code) {
+                "sub10" -> {
+                    totalNetWorth += 5555.0
+                    triggerHapticFeedback()
+                    pulseView(btnRedeemPromo)
+                    soundManager.playChaChing()
+                    spawnFloatingTapText(5555.0)
+                    showNeonSnackbar("🎉 Code sub10 Activated: +$5,555.00 Cash Bonus!")
+                    etPromoCode.text.clear()
+                    updateDashboardDisplays()
+                    updateTradingTerminalDisplay()
+                }
+                "rich99" -> {
+                    totalNetWorth += 10000.0
+                    triggerHapticFeedback()
+                    pulseView(btnRedeemPromo)
+                    soundManager.playChaChing()
+                    spawnFloatingTapText(10000.0)
+                    showNeonSnackbar("🎉 Code rich99 Activated: +$10,000.00 Cash Bonus!")
+                    etPromoCode.text.clear()
+                    updateDashboardDisplays()
+                    updateTradingTerminalDisplay()
+                }
+                else -> {
+                    shakeView(etPromoCode ?: btnRedeemPromo)
+                    soundManager.playLossThud()
+                    showNeonSnackbar("Invalid or expired promo code.")
+                }
+            }
+        }
+
         val tvAdminStatusBadge = sheetView.findViewById<TextView>(R.id.tvAdminStatusBadge)
         val tvAdminDesc = sheetView.findViewById<TextView>(R.id.tvAdminDesc)
         val layoutSecretCodeInput = sheetView.findViewById<View>(R.id.layoutSecretCodeInput)
@@ -692,6 +766,8 @@ class MainActivity : AppCompatActivity() {
         val layoutAdminControls = sheetView.findViewById<View>(R.id.layoutAdminControls)
 
         // Cheats
+        val etEditBalance = sheetView.findViewById<EditText>(R.id.etEditBalance)
+        val btnApplyBalance = sheetView.findViewById<MaterialButton>(R.id.btnApplyBalance)
         val btnAdminAdd1M = sheetView.findViewById<MaterialButton>(R.id.btnAdminAdd1M)
         val btnAdminAdd1B = sheetView.findViewById<MaterialButton>(R.id.btnAdminAdd1B)
         val btnAdminMaxBiz = sheetView.findViewById<MaterialButton>(R.id.btnAdminMaxBiz)
@@ -699,9 +775,15 @@ class MainActivity : AppCompatActivity() {
         val btnAdminMaxCareer = sheetView.findViewById<MaterialButton>(R.id.btnAdminMaxCareer)
         val btnAdminGiveStocks = sheetView.findViewById<MaterialButton>(R.id.btnAdminGiveStocks)
         val btnAdminCompleteMissions = sheetView.findViewById<MaterialButton>(R.id.btnAdminCompleteMissions)
+        val btnAdminEventLog = sheetView.findViewById<MaterialButton>(R.id.btnAdminEventLog)
 
         // Reset
         val btnReset = sheetView.findViewById<MaterialButton>(R.id.btnResetGameProgress)
+        val btnOpenMultiplayer = sheetView.findViewById<MaterialButton>(R.id.btnOpenMultiplayerFromSettings)
+        btnOpenMultiplayer?.setOnClickListener {
+            dialog.dismiss()
+            showMultiplayerDuelDialog()
+        }
 
         fun updateAdminStateInSheet() {
             if (isAdminUnlocked) {
@@ -728,17 +810,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnUnlockAdmin.setOnClickListener {
+            soundManager.playKeypadBeep()
             val code = etSecretCode.text.toString().trim()
             if (code.equals("9ppp", ignoreCase = true)) {
                 isAdminUnlocked = true
                 triggerHapticFeedback()
                 pulseView(btnUnlockAdmin)
+                soundManager.playFuturisticChime()
                 updateAdminStateInSheet()
                 showNeonSnackbar("🔓 ADMIN ACCESS GRANTED! Welcome developer.")
             } else {
                 shakeView(etSecretCode)
                 shakeView(btnUnlockAdmin)
+                soundManager.playLossThud()
                 showNeonSnackbar("❌ Incorrect Secret Code! Access Denied.")
+            }
+        }
+
+        btnApplyBalance?.setOnClickListener {
+            val balanceStr = etEditBalance?.text?.toString()?.trim()
+            val newBalance = balanceStr?.toDoubleOrNull()
+            if (newBalance != null && newBalance >= 0.0) {
+                totalNetWorth = newBalance
+                triggerHapticFeedback()
+                pulseView(btnApplyBalance)
+                soundManager.playChaChing()
+                showNeonSnackbar("💰 Balance updated to ${currencyFormatter.format(totalNetWorth)}!")
+                updateDashboardDisplays()
+                updateTradingTerminalDisplay()
+            } else {
+                shakeView(etEditBalance ?: btnApplyBalance)
+                showNeonSnackbar("Enter a valid balance amount!")
             }
         }
 
@@ -746,6 +848,7 @@ class MainActivity : AppCompatActivity() {
             totalNetWorth += 1_000_000.0
             triggerHapticFeedback()
             pulseView(btnAdminAdd1M)
+            soundManager.playChaChing()
             spawnFloatingTapText(1_000_000.0)
             showNeonSnackbar("💰 +$1,000,000 Cash Added!")
             updateDashboardDisplays()
@@ -756,6 +859,7 @@ class MainActivity : AppCompatActivity() {
             totalNetWorth += 1_000_000_000.0
             triggerHapticFeedback()
             pulseView(btnAdminAdd1B)
+            soundManager.playChaChing()
             spawnFloatingTapText(1_000_000_000.0)
             showNeonSnackbar("💎 +$1,000,000,000 Cash Added!")
             updateDashboardDisplays()
@@ -769,6 +873,7 @@ class MainActivity : AppCompatActivity() {
             }
             triggerHapticFeedback()
             pulseView(btnAdminMaxBiz)
+            soundManager.playConstructionPunch()
             showNeonSnackbar("🚀 All 6 Businesses set to Level 50!")
             updateDashboardDisplays()
         }
@@ -779,6 +884,7 @@ class MainActivity : AppCompatActivity() {
             clickUpgradeCost = 100_000_000.0
             triggerHapticFeedback()
             pulseView(btnAdminMaxTap)
+            soundManager.playLevelUpChime()
             showNeonSnackbar("⚡ Click Power set to LVL 25 (+$5,000/tap)!")
             updateDashboardDisplays()
         }
@@ -790,6 +896,7 @@ class MainActivity : AppCompatActivity() {
             completedShifts = 100
             triggerHapticFeedback()
             pulseView(btnAdminMaxCareer)
+            soundManager.playManagerHiredStamp()
             showNeonSnackbar("👔 Promoted to Chief Executive Officer (CEO)!")
             updateCareerDisplays()
             updateDashboardDisplays()
@@ -802,6 +909,7 @@ class MainActivity : AppCompatActivity() {
             }
             triggerHapticFeedback()
             pulseView(btnAdminGiveStocks)
+            soundManager.playProfitCascade()
             showNeonSnackbar("📈 +5,000 Shares added to NEON, CYBER, VOLT, GLD!")
             updateTradingTerminalDisplay()
         }
@@ -812,8 +920,30 @@ class MainActivity : AppCompatActivity() {
             }
             triggerHapticFeedback()
             pulseView(btnAdminCompleteMissions)
+            soundManager.playDoubleChaChing()
             showNeonSnackbar("🎯 All 3 Daily Missions marked completed!")
             updateMissionsDisplay()
+        }
+
+        btnAdminEventLog?.setOnClickListener {
+            triggerHapticFeedback()
+            pulseView(btnAdminEventLog)
+            soundManager.playTick()
+            val logMessage = """
+                [SYSTEM EVENT LOG]
+                • Net Worth: ${currencyFormatter.format(totalNetWorth)}
+                • Click Power: LVL $clickLevel ($clickValue/tap)
+                • Businesses Active: ${businesses.count { it.level > 0 }}/6
+                • Career Rank: ${careerRanks.getOrNull(currentCareerRankIndex)?.title ?: "Intern"}
+                • Stocks Owned: ${stocks.sumOf { it.ownedShares }} shares
+                • Missions Completed: ${activeMissions.count { it.isCompleted }}/${activeMissions.size}
+                • Admin Status: ${if (isAdminUnlocked) "ACTIVE (God Mode)" else "LOCKED"}
+            """.trimIndent()
+            AlertDialog.Builder(this)
+                .setTitle("📜 In-Game Event & State Log")
+                .setMessage(logMessage)
+                .setPositiveButton("CLOSE", null)
+                .show()
         }
 
         btnReset.setOnClickListener {
@@ -821,6 +951,7 @@ class MainActivity : AppCompatActivity() {
                 .setTitle("⚠️ Reset Game Progress?")
                 .setMessage("Are you sure you want to reset everything? Your cash, career, upgrades, businesses, and stocks will be reset to a brand new game.")
                 .setPositiveButton("RESET ALL") { _, _ ->
+                    soundManager.playPowerDown()
                     resetAllGameProgress()
                     dialog.dismiss()
                 }
@@ -872,6 +1003,205 @@ class MainActivity : AppCompatActivity() {
         updateCareerDisplays()
         updateTradingTerminalDisplay()
         updateMissionsDisplay()
+    }
+
+    private fun showMultiplayerDuelDialog() {
+        triggerHapticFeedback()
+        soundManager.playTick()
+        val dialog = BottomSheetDialog(this, R.style.Theme_NeonBottomSheetDialog)
+        val sheetView = layoutInflater.inflate(R.layout.dialog_multiplayer_duel, null)
+        dialog.setContentView(sheetView)
+
+        val btnClose = sheetView.findViewById<ImageView>(R.id.btnMultiplayerClose)
+        val btnTabOffline = sheetView.findViewById<MaterialButton>(R.id.btnTabOfflineDuel)
+        val btnTabOnline = sheetView.findViewById<MaterialButton>(R.id.btnTabOnlineDuel)
+        val tvDuelStatus = sheetView.findViewById<TextView>(R.id.tvDuelStatus)
+        val tvDuelTimer = sheetView.findViewById<TextView>(R.id.tvDuelTimer)
+        val progComparison = sheetView.findViewById<LinearProgressIndicator>(R.id.progDuelComparison)
+        val tvP1Name = sheetView.findViewById<TextView>(R.id.tvP1Name)
+        val tvP1Score = sheetView.findViewById<TextView>(R.id.tvP1Score)
+        val btnP1Tap = sheetView.findViewById<MaterialButton>(R.id.btnP1Tap)
+        val tvP2Name = sheetView.findViewById<TextView>(R.id.tvP2Name)
+        val tvP2Score = sheetView.findViewById<TextView>(R.id.tvP2Score)
+        val btnP2Tap = sheetView.findViewById<MaterialButton>(R.id.btnP2Tap)
+        val btnStartDuel = sheetView.findViewById<MaterialButton>(R.id.btnStartDuel)
+
+        var isOnlineMode = false
+        var isDuelActive = false
+        var p1Score = 0.0
+        var p2Score = 0.0
+        var secondsLeft = 30
+        var currentRival = "WallStreetWolf"
+        val rivalNames = listOf("CryptoWhale_99", "WallStreetWolf", "TycoonQueen", "ApexInvestor", "VentureViper", "NeonRaider")
+
+        fun updateComparisonBar() {
+            val total = p1Score + p2Score
+            if (total <= 0.0) {
+                progComparison.progress = 50
+            } else {
+                val ratio = ((p1Score / total) * 100).toInt().coerceIn(5, 95)
+                progComparison.progress = ratio
+            }
+        }
+
+        fun updateModeUI() {
+            if (isOnlineMode) {
+                btnTabOnline.backgroundTintList = ColorStateList.valueOf(getColor(R.color.neon_cyan))
+                btnTabOnline.setTextColor(Color.BLACK)
+                btnTabOffline.backgroundTintList = ColorStateList.valueOf(getColor(R.color.bg_surface_elevated))
+                btnTabOffline.setTextColor(getColor(R.color.text_secondary))
+
+                tvP1Name.text = "PLAYER 1 (YOU)"
+                tvP2Name.text = "$currentRival (ONLINE RIVAL)"
+                btnP2Tap.text = "RIVAL TAPPING..."
+                btnP2Tap.isEnabled = false
+            } else {
+                btnTabOffline.backgroundTintList = ColorStateList.valueOf(getColor(R.color.neon_green))
+                btnTabOffline.setTextColor(getColor(R.color.text_on_neon))
+                btnTabOnline.backgroundTintList = ColorStateList.valueOf(getColor(R.color.bg_surface_elevated))
+                btnTabOnline.setTextColor(getColor(R.color.text_secondary))
+
+                tvP1Name.text = "PLAYER 1 (LEFT / TOP)"
+                tvP2Name.text = "PLAYER 2 (RIGHT / BOTTOM)"
+                btnP2Tap.text = "P2 TAP! (+$50)"
+                btnP2Tap.isEnabled = isDuelActive
+            }
+        }
+
+        btnP1Tap.isEnabled = false
+        btnP2Tap.isEnabled = false
+        updateModeUI()
+
+        btnTabOffline.setOnClickListener {
+            if (isDuelActive) return@setOnClickListener
+            isOnlineMode = false
+            triggerHapticFeedback()
+            soundManager.playTick()
+            updateModeUI()
+        }
+
+        btnTabOnline.setOnClickListener {
+            if (isDuelActive) return@setOnClickListener
+            isOnlineMode = true
+            currentRival = rivalNames.random()
+            triggerHapticFeedback()
+            soundManager.playTick()
+            updateModeUI()
+        }
+
+        btnClose.setOnClickListener {
+            duelTimerJob?.cancel()
+            rivalTapJob?.cancel()
+            dialog.dismiss()
+        }
+
+        dialog.setOnDismissListener {
+            duelTimerJob?.cancel()
+            rivalTapJob?.cancel()
+        }
+
+        val tapBonus = (50.0 + clickLevel * 5.0)
+
+        btnP1Tap.setOnClickListener {
+            if (!isDuelActive) return@setOnClickListener
+            p1Score += tapBonus
+            tvP1Score.text = currencyFormatter.format(p1Score)
+            pulseView(btnP1Tap)
+            triggerHapticFeedback()
+            soundManager.playCoinClick()
+            updateComparisonBar()
+        }
+
+        btnP2Tap.setOnClickListener {
+            if (!isDuelActive || isOnlineMode) return@setOnClickListener
+            p2Score += tapBonus
+            tvP2Score.text = currencyFormatter.format(p2Score)
+            pulseView(btnP2Tap)
+            triggerHapticFeedback()
+            soundManager.playCoinClick()
+            updateComparisonBar()
+        }
+
+        btnStartDuel.setOnClickListener {
+            if (isDuelActive) return@setOnClickListener
+            isDuelActive = true
+            p1Score = 0.0
+            p2Score = 0.0
+            secondsLeft = 30
+
+            tvP1Score.text = "$0.00"
+            tvP2Score.text = "$0.00"
+            progComparison.progress = 50
+            tvDuelStatus.text = "⚔️ DUEL IN PROGRESS!"
+            tvDuelStatus.setTextColor(getColor(R.color.neon_amber))
+            tvDuelTimer.text = "⏱ 30s"
+
+            btnStartDuel.visibility = View.GONE
+            btnP1Tap.isEnabled = true
+            btnP2Tap.isEnabled = !isOnlineMode
+
+            triggerHapticFeedback()
+            soundManager.playLongSynth()
+
+            if (isOnlineMode) {
+                rivalTapJob?.cancel()
+                rivalTapJob = lifecycleScope.launch {
+                    while (isDuelActive && secondsLeft > 0) {
+                        val delayMs = Random.nextLong(140, 240)
+                        delay(delayMs)
+                        if (!isDuelActive) break
+                        val rivalIncrement = tapBonus * Random.nextDouble(0.85, 1.25)
+                        p2Score += rivalIncrement
+                        tvP2Score.text = currencyFormatter.format(p2Score)
+                        updateComparisonBar()
+                    }
+                }
+            }
+
+            duelTimerJob?.cancel()
+            duelTimerJob = lifecycleScope.launch {
+                while (secondsLeft > 0 && isDuelActive) {
+                    delay(1000)
+                    secondsLeft--
+                    tvDuelTimer.text = "⏱ ${secondsLeft}s"
+                    if (secondsLeft <= 5 && secondsLeft > 0) {
+                        soundManager.playTick()
+                    }
+                }
+
+                if (isDuelActive) {
+                    isDuelActive = false
+                    rivalTapJob?.cancel()
+                    btnP1Tap.isEnabled = false
+                    btnP2Tap.isEnabled = false
+                    btnStartDuel.visibility = View.VISIBLE
+                    btnStartDuel.text = "REMATCH (30-SEC DUEL)"
+
+                    if (p1Score > p2Score) {
+                        tvDuelStatus.text = "🏆 YOU WIN! +$2,500 BONUS"
+                        tvDuelStatus.setTextColor(getColor(R.color.neon_green))
+                        totalNetWorth += 2500.0
+                        soundManager.playDoubleChaChing()
+                        spawnFloatingTapText(2500.0)
+                        showNeonSnackbar("🏆 Duel Victory! Earned $2,500.00 Net Worth!")
+                        updateDashboardDisplays()
+                        updateMissionProgress(MissionType.CLICKS, 30)
+                    } else if (p2Score > p1Score) {
+                        val winnerName = if (isOnlineMode) currentRival else "PLAYER 2"
+                        tvDuelStatus.text = "❌ $winnerName WINS!"
+                        tvDuelStatus.setTextColor(getColor(R.color.neon_red))
+                        soundManager.playLossThud()
+                        showNeonSnackbar("Defeat in duel! Try again for revenge.")
+                    } else {
+                        tvDuelStatus.text = "🤝 TIED MATCH! EVEN BATTLE"
+                        tvDuelStatus.setTextColor(getColor(R.color.neon_cyan))
+                        soundManager.playTick()
+                    }
+                }
+            }
+        }
+
+        dialog.show()
     }
 
     private fun showDailyMissionsBottomSheet() {
@@ -1748,6 +2078,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun triggerHapticFeedback() {
+        if (::soundManager.isInitialized && !soundManager.isHapticEnabled) return
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as? VibratorManager
